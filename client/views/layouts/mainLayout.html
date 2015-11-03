@@ -7,88 +7,15 @@
       <meta name="msapplication-tap-highlight" content="no">
       <meta name="description" content="Messenger App">
       <title>Messenger App</title>
-      <!-- <link href="http://materializecss.com/css/ghpages-materialize.css" type="text/css" rel="stylesheet" media="screen,projection"> -->
       <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    </head>
 
-
-   <!-- <header>
-   <div class="navbar-fixed">
-   <nav>
-   <div class="nav-wrapper z-depth-1">
-   <a href="#!" class="brand-logo center">&nbsp;Messenger App</a>
-   <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-   <ul class="right hide-on-med-and-down">
-   <li><a href="/contacts">Contacts</a></li>
-   <li><a href="/chats">Chats</a></li>
-   <li><a href="/settings">Settings</a></li>
-</ul>
-<ul class="side-nav">
-<li><a href="/contacts">Contacts</a></li>
-<li><a href="/chats">Chats</a></li>
-<li><a href="/settings">Settings</a></li>
-</ul>
-</div>
-</nav>
-</div>
-</header> -->
-
-<header>
-   <div class="navbar-fixed">
-      <nav class="top-nav">
-         <div class="container">
-            <div class="nav-wrapper"><a class="page-title">Messenger App</a></div>
-         </div>
-
-         <div class="container">
-            <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
-         </div>
-      </nav>
-
-   </div>
-
-
-   <ul id="nav-mobile" class="side-nav fixed">
-      <li class="logo"><a id="logo-container" href="/" class="brand-logo">
-         <object id="front-page-logo" type="image/svg+xml" data="/img/logo.svg">Your browser does not support SVG</object></a></li>
-
-
-         <li class="bold"><a href="getting-started.html" class="waves-effect waves-teal">Contacts</a></li>
-         <li class="no-padding">
-            <ul class="collapsible collapsible-accordion">
-               <li class="bold"><a class="collapsible-header active waves-effect waves-teal">Chats</a>
-                  <div class="collapsible-body">
-                     <ul>
-                        <li class="active"><a href="color.html">Color</a></li>
-                        <li><a href="grid.html">Grid</a></li>
-                        <li><a href="helpers.html">Helpers</a></li>
-
-                     </ul>
-                  </div>
-               </li>
-               <li class="bold"><a class="collapsible-header  waves-effect waves-teal">My Account</a>
-                  <div class="collapsible-body">
-                     <ul>
-                        <li><a href="collapsible.html">Preferences</a></li>
-                        <li><a href="dialogs.html">Profile</a></li>
-                        <li><a href="dropdown.html">Change Avatar</a></li>
-                     </ul>
-                  </div>
-               </li>
-            </ul>
-         </li>
-         <li class="bold"><a href="about.html" class="waves-effect waves-teal">About</a></li>
-      </ul>
-</header>
-
-
+   {{> header}}
 
    <main>
       <div class="container">
          <div class="row">
-
             <div class="col s12">
-
 
                <!-- Spinner  -->
                <!-- <div class="row center">
@@ -105,27 +32,12 @@
                   </div>
                </div> -->
 
-
                {{> Template.dynamic template=content}}
             </div>
          </div>
       </div>
    </main>
 
-
-
-   <footer class="page-footer hide-on-large-only">
-      <div class="row">
-         <div class="col s12">
-            <ul id="tabs-footer" class="tabs">
-               <li class="tab col s4"><a class="active" href="#test2"><i class="icon-footer medium material-icons">people</i></a></li>
-               <li class="tab col s4"><a href="#test3"><i class="icon-footer medium material-icons">chat</i></a></li>
-               <li class="tab col s4"><a href="#test4"><i class="icon-footer medium material-icons">settings</i></a></li>
-            </ul>
-         </div>
-      </div>
-   </footer>
-
-
+   {{> footer}}
 
 </template>
