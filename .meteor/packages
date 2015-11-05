@@ -34,7 +34,8 @@ tmeasday:publish-counts
 
 momentjs:moment
 
-materialize:materialize@=0.97.0
+fourseven:scss
+poetic:materialize-scss
 gildaspk:autoform-materialize
 aldeed:autoform
 aldeed:autoform-select2

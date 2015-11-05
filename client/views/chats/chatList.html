@@ -4,7 +4,14 @@
       <div class="col s12 m10 l8">
          <ul class="collection with-header">
             <li class="collection-header"><h4>Chats</h4></li>
-            
+            {{#each chatList}}
+               <li class="collection-item avatar">
+                  <img src="{{user.picture.thumbnail}}" alt="" class="circle">
+                  <span class="title">{{user.name.first}} {{user.name.last}}</span>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                  <a href="#!" class="secondary-content">12:12</a>
+               </li>
+            {{/each}}
          </ul>
       </div>
    </div>
