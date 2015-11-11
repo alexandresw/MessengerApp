@@ -6,16 +6,33 @@
             <li class="collection-header"><h4>Contacts</h4></li>
             {{#each contactList}}
                <li class="collection-item avatar">
-                  <img src="{{user.picture.thumbnail}}" alt="" class="circle">
-                  <span class="title">{{user.name.first}} {{user.name.last}}</span>
-                  <p>{{user.email}} <br>
-                     {{user.cell}}
+                  <img src="{{contactUser.profile.avatar}}" alt="" class="circle">
+                  <span class="title">{{contactUser.profile.fullName}}</span>
+                  <p>{{contactUser.emails.[0].address}} <br>
+
                   </p>
                   <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                </li>
             {{/each}}
+
+            <a class="waves-effect waves-light btn modal-trigger" href="#addContactModal">Add Contact</a>
          </ul>
       </div>
    </div>
+
+   <div id="addContactModal" class="modal">
+    <div class="modal-content">
+      <h4>New Contact</h4>
+      <div class="row">
+               <div class="input-field col s12">
+                  <input id="contactEmail" type="email" class="validate">
+                  <label for="contactEmail">Email</label>
+               </div>
+            </div>
+    </div>
+    <div class="modal-footer">
+      <a id="addContact" class=" modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+    </div>
+  </div>
 
 </template>

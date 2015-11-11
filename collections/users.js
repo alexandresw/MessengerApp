@@ -1,5 +1,11 @@
 Schema = {};
 
+Meteor.users.helpers({
+  contacts: function() {
+    return Contacts.find({ userId: this._id});
+  }
+});
+
 Schema.Profile = new SimpleSchema({
     fullName: {
         type: String
@@ -15,6 +21,10 @@ Schema.Profile = new SimpleSchema({
         }
     },
     phone: {
+      type: String,
+      optional: true
+    }, 
+    avatar: {
       type: String,
       optional: true
     }
