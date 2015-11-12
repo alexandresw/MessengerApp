@@ -1,0 +1,19 @@
+<ion-modal-view ng-controller="NewContactCtrl">
+  <ion-header-bar>
+    <h1 class="title">New Contact</h1>
+    <div class="buttons">
+      <button class="button button-clear button-positive" ng-click="hideModal()">Cancel</button>
+    </div>
+  </ion-header-bar>
+ 
+  <ion-content>
+    <div class="list">
+      <label class="item item-input">
+        <input ng-model="data.email" type="text" placeholder="Email">
+      </label>
+      <button class="button button-block button-positive" ng-click="newContact()">
+        Add
+      </button>
+    </div>
+  </ion-content>
+</ion-modal-view>

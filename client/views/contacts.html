@@ -1,0 +1,17 @@
+<ion-view view-title="Contacts">
+	<ion-nav-buttons side="right">
+ 		<button ng-click="openNewContactModal()" class="button button-clear button-positive button-icon ion-ios-compose-outline"></button>
+	</ion-nav-buttons>
+	<ion-content>
+		<ion-list>
+			<ion-item ng-repeat="contact in contacts" class="item-chat item-remove-animate item-avatar item-icon-right" type="item-text-wrap" href="#/tab/contacts/{{contact._id}}">
+				<img ng-src="{{contact.user() | userPicture}}">
+				<h2>{{contact.user().profile.name}}</h2>
+				<i class="icon ion-chevron-right icon-accessory"></i>
+				<ion-option-button class="button-assertive" ng-click="remove(contact)">
+          		Delete
+	        </ion-option-button>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

@@ -1,30 +1,24 @@
+
+Meteor.users.list = function(userId){
+  
+  var contacts = Contacts.find({ userId: (userId || Meteor.userId()) });
+  var contactIds = contacts.map(function(p) { return p.contactId });
+
+  return Meteor.users.find({_id: {$in: contactIds}}, { fields: { profile: 1 } });
+};
+
+
 Schema = {};
 
-Meteor.users.helpers({
-  contacts: function() {
-    return Contacts.find({ userId: this._id});
-  }
-});
-
 Schema.Profile = new SimpleSchema({
-    fullName: {
+    name: {
         type: String
-    },
-    sex: {
-        type: String,
-        optional: true,
-        allowedValues: ['Male', 'Female'],
-        autoform: {
-          afFieldInput: {
-            type: "select-radio-inline"
-          }
-        }
     },
     phone: {
       type: String,
       optional: true
     }, 
-    avatar: {
+    picture: {
       type: String,
       optional: true
     }
