@@ -1,0 +1,36 @@
+<ion-view title="Video14">
+  <ion-content class="video">
+
+    <button class="button button-block button-positive" ng-click="connectWebrtc()">
+      Connect
+    </button>
+
+    <div class="videoContent">
+
+
+      <div class="row">
+         <div class="small-12 medium-8 large-9 columns">
+
+            <div class="video-container ratio4_3">
+               <div class="video-content" id="remote" >
+                <div ng-bind-html="videoHTML"></div>
+               </div>
+            </div>
+
+            <div class="side-area">
+               <div class="video-container ratio4_3 localVideo">
+                  <div class="video-content">
+                     <video id="localVideo" oncontextmenu="return false;"></video>
+                  </div>
+               </div>
+               
+            </div>
+
+         </div>
+         
+      </div>
+
+    </div>
+    
+  </ion-content>
+</ion-view>

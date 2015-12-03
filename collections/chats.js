@@ -1,3 +1,5 @@
+Cwebrtc = new Mongo.Collection("webrtc");
+
 Chats = new Mongo.Collection("chats");
 
 Chats.attachSchema(

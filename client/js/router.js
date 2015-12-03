@@ -87,7 +87,17 @@ function config($stateProvider, $urlRouterProvider) {
         return $meteor.requireUser();
       }]
     }
+  })
+  .state('video', {
+    url: '/video',
+    templateUrl: 'client/views/video/video.html',
+    controller: 'VideoCtrl'
+    // resolve: {
+    //   user: ['$meteor', function ($meteor) {
+    //     return $meteor.requireUser();
+    //   }]
+    // }
   });
 
-  $urlRouterProvider.otherwise('tab/chats');
+  $urlRouterProvider.otherwise('video');
 }
