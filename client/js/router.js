@@ -89,7 +89,7 @@ function config($stateProvider, $urlRouterProvider) {
     }
   })
   .state('video', {
-    url: '/video',
+    url: '/video/:roomId',
     templateUrl: 'client/views/video/video.html',
     controller: 'VideoCtrl'
     // resolve: {
@@ -99,5 +99,5 @@ function config($stateProvider, $urlRouterProvider) {
     // }
   });
 
-  $urlRouterProvider.otherwise('video');
+  $urlRouterProvider.otherwise('tab/chats');
 }

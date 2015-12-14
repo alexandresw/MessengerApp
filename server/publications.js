@@ -16,7 +16,7 @@ Meteor.publishComposite('chats', function () {
 
   return {
     find: function () {
-      return Chats.find({ userIds: this.userId });
+      return Chats.find({ userIds: this.userId }, {sort: {'lastMessage.timestamp': -1 } });
     },
     children: [
     {

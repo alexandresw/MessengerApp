@@ -9,6 +9,7 @@ function ContactDetailsCtrl ($scope, $state, $stateParams, $ionicScrollDelegate,
 
   $scope.data = {};
   $scope.newChat = newChat;
+  $scope.newVideoCall = newVideoCall;
  
  
   // TODO: Use same as newChatCtrl
@@ -23,6 +24,14 @@ function ContactDetailsCtrl ($scope, $state, $stateParams, $ionicScrollDelegate,
  
   function goToChat(chatId) {
     return $state.go('tab.chat-details', {chatId: chatId});
+  }
+
+  function newVideoCall(userId) {
+    $meteor.call('newVideoRoom', userId).then(goToVideo);
+  }
+ 
+  function goToVideo(roomId) {
+    return $state.go('video', {roomId: roomId});
   }
 
 

@@ -23,7 +23,8 @@ Meteor.methods({
     message.userId = this.userId;
 
     var messageId = Messages.insert(message);
-    Chats.update(message.chatId, { $set: { lastMessage: message } });
+    var result = Chats.update({_id: message.chatId}, { $set: { lastMessage: message } });
+    console.log(result);
 
     return messageId;
   },
@@ -116,8 +117,79 @@ Meteor.methods({
     check(data, String);
  
     return Meteor.users.update(this.userId, { $set: { 'profile.picture': data } });
-  }
+  },
 
+  sendNotification: function(toUserId, message){
+    if (!this.userId) {
+      throw new Meteor.Error('not-logged-in', 'Must be logged to create a contact.');
+    }
+
+    check(toUserId, String);
+    check(message, String);
+
+
+    Push.send({
+        from: 'push',
+        title: 'Message',
+        text: message,
+        badge: 1, 
+        query: {
+            userId: toUserId
+        }
+        // token: appId or token eg. "{ apn: token }"
+        // tokens: array of appId's or tokens
+        // payload: user data
+        // delayUntil: Date
+    });
+
+  },
+
+
+  getIceServers: function(){
+    if (!this.userId) {
+      throw new Meteor.Error('not-logged-in', 'Must be logged to create a contact.');
+    }
+
+    var url = "https://service.xirsys.com/ice";
+    var data = {
+      ident: Meteor.settings.xirsysUsername,
+      secret: Meteor.settings.xirsysSecret,
+      domain: "52.22.19.104",
+      application: "default",
+      room: "default",
+      secure: 1
+    };
+
+    var result = HTTP.call('POST', url, { "data": data});
+
+    console.log(JSON.stringify(result.data.d));
+    return result.data.d;
+  },
+
+
+  newVideoRoom: function (otherId) {
+    if (! this.userId) {
+      throw new Meteor.Error('not-logged-in', 'Must be logged to create a chat.');
+    }
+
+    check(otherId, String);
+
+    var otherUser = Meteor.users.findOne(otherId);
+    if (! otherUser) {
+      throw new Meteor.Error('user-not-exists',
+        'Chat\'s user not exists');
+    }
+
+    var room = {
+      callerId: this.userId,
+      receiverId: otherId,
+      createdAt: new Date()
+    };
+
+    var roomId = Rooms.insert(room);
+
+    return roomId;
+  }
 
 
 

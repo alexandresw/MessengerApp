@@ -36,3 +36,14 @@ npm install
 cordova platform add ios
 cordova build ios
 
+
+Google Android
+Server API Key=AIzaSyAK7JOj06HRjFR7-Nz-vcVfZdo_Pxr-r7k
+Sender ID=452021467302
+
+
+Android APK Signature
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 android-release-unsigned.apk MessengerApp
+$ANDROID_HOME/build-tools/23.0.1/zipalign 4 android-release-unsigned.apk production.apk
+

@@ -1,16 +1,27 @@
 <ion-view title="Profile">
   <ion-content class="profile">
-    <img ng-src="{{ contact.user() | userPicture }}" alt="profile picture" width="100" height="100">
-      
-    <div class="list">
-      <label class="item item-input">
-        <h2>{{contact.user().profile.name}}</h2>
-      </label>
-    </div>
+    
     <div class="padding text-center">
-      <a ng-click="newChat(contact.user()._id)" class="button button-clear button-balanced">Send Message</a><br/>
-      <a href="" class="button button-clear button-balanced">Audio Call</a><br/>
-      <a href="#/video" class="button button-clear button-balanced">Video Call</a>
+      <h2>{{contact.user().profile.name}}</h2>
+      <img ng-src="{{ contact.user() | userPicture }}" alt="profile picture" width="100" height="100">
     </div>
+
+    <button ng-click="newChat(contact.user()._id)"  class="button button-block button-outline button-balanced">
+      <i class="icon ion-ios-chatboxes-outline"></i> Send Message
+    </button>
+
+    <button ng-click="newAudioCall(contact.user()._id)" class="button button-block button-outline button-balanced">
+      <i class="icon ion-ios-telephone-outline"></i> Audio Call
+    </button>
+
+    <button ng-click="newVideoCall(contact.user()._id)" class="button button-block button-outline button-balanced">
+      <i class="icon ion-ios-videocam-outline"></i> Video Call
+    </button>
+    
+    <br/>
+    <button class="button button-block button-assertive">
+      Delete Contact
+    </button>
+
   </ion-content>
 </ion-view>

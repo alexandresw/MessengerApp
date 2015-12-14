@@ -21,7 +21,7 @@ Streamy.on('join', function(data, from) {
    Connections.find({
       userId: {$ne: userId},
    }).fetch().map(function(con){
-      result.clients[con.sessionId] = { screen: con.resources.screen, video: true, audio: true };
+      result.clients[con.sessionId] = { screen: con.resources.screen, video: true, audio: false };
    });
 
    Streamy.emit('joinCb', result, from);

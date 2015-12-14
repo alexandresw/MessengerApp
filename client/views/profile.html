@@ -2,21 +2,21 @@
   <ion-nav-buttons side="right">
     <button ng-click="updateName()" ng-disabled="!data.name || data.name.length === 0" class="button button-clear button-positive">Done</button>
   </ion-nav-buttons>
+
+
  
-  <ion-content class="profile">
+  <ion-content class="profile text-center">
+    
     <a class="profile-picture positive" ng-click="updatePicture()">
       <div ng-if="currentUser.profile.picture">
-        <img ng-src="{{ currentUser.profile.picture }}" alt="profile picture">
+        <img ng-src="{{ currentUser.profile.picture }}" alt="profile picture" width="100" height="100">
         edit
       </div>
       <div ng-if="!currentUser.profile.picture" class="upload-placehoder">
         Add photo
       </div>
     </a>
- 
-    <div class="instructions">
-      Enter your name and add an optional profile picture
-    </div>
+    
  
     <div class="list profile-name">
       <label class="item item-input">

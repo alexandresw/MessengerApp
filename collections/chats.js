@@ -1,5 +1,3 @@
-Cwebrtc = new Mongo.Collection("webrtc");
-
 Chats = new Mongo.Collection("chats");
 
 Chats.attachSchema(
@@ -14,7 +12,8 @@ Chats.attachSchema(
       },
       lastMessage: {
       	type: Object,
-      	optional: true
+      	optional: true,
+         blackbox: true
       }
    })
 );

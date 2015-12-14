@@ -1,5 +1,10 @@
 {
-  "public": {
+	"public": {
 
-  }
+	},
+	"twilioAccount": "AC1ec2c32386e5184512347089f6aae646",
+	"twilioToken": "74aa171341cf35862b0e68acb746b920",
+	"xirsysUsername": "alexandresw",
+	"xirsysSecret": "e2b332ea-2405-11e5-aa70-2872f5f3e591" 
+   
 }
