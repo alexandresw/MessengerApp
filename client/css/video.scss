@@ -81,11 +81,6 @@ footer > div.active {
   opacity: .8;
 }
 
-html {
-  height: 100%;
-  margin: 0;
-  width: 100%;
-}
 
 label {
   margin: 0 10px 0 0;
@@ -110,11 +105,20 @@ label {
   bottom: 20px;
   right: 20px;
   /* video div is flipped horizontally when active*/
-  max-height: 17%;
-  max-width: 17%;
+  max-height: 30%;
+  max-width: 30%;
   opacity: 0;
   position: absolute;
   transition: opacity 1s;
+}
+
+@media (min-width:500px){
+  #mini-video {
+    max-height: 20%;
+    max-width: 20%;
+    bottom: 30px;
+    right: 30px;
+  }
 }
 
 #mini-video.active {
@@ -168,7 +172,7 @@ label {
 /*////// icons CSS start ////////////////////////*/
 
 #icons {
-  bottom: 77px;
+  bottom: 30px;
   left: 6vw;
   position: absolute;
 }
@@ -273,6 +277,8 @@ svg:hover {
 
 #hangup {
   transition: 360ms;
+  background: #dd2c00;
+  fill: #dd2c00;
 }
 
 #hangup:hover {
@@ -283,3 +289,35 @@ svg:hover {
 }
 
 /*////// icons CSS end /////////////////////////*/
+
+.videoContent {
+  /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  /* disable copy/paste */
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.videoContent input {
+  /* disable copy/paste */
+  -webkit-user-select: auto !important;
+  -khtml-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+}
+
+#local-video.active {
+  opacity: 0.85 !important;
+}
+
+#mini-video.active {
+  z-index: 100 !important;
+}
+
+#remote-video.active {
+  opacity: 0.85 !important;
+}

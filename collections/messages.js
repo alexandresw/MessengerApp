@@ -10,6 +10,10 @@ Messages.attachSchema(
          type: String,
          denyUpdate: true
       },
+      type: {
+         type: String,
+         denyUpdate: true
+      },
       userId: {
          type: String,
          denyUpdate: true
@@ -20,7 +24,13 @@ Messages.attachSchema(
       },
       text: {
          type: String,
-         denyUpdate: true
+         denyUpdate: true,
+         optional: true
+      },
+      picture: {
+         type: String,
+         denyUpdate: true,
+         optional: true
       },
       timestamp: {
          type: Date,

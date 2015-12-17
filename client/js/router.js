@@ -30,6 +30,9 @@ function config($stateProvider, $urlRouterProvider) {
       }],
       users: ['$meteor', function ($meteor) {
         return $meteor.subscribe('users');
+      }],
+      rooms: ['$meteor', function ($meteor) {
+        return $meteor.subscribe('rooms');
       }]
     }
   })
@@ -85,18 +88,24 @@ function config($stateProvider, $urlRouterProvider) {
     resolve: {
       user: ['$meteor', function ($meteor) {
         return $meteor.requireUser();
+      }],
+      rooms: ['$meteor', function ($meteor) {
+        return $meteor.subscribe('rooms');
       }]
     }
   })
   .state('video', {
     url: '/video/:roomId',
-    templateUrl: 'client/views/video/video.html',
-    controller: 'VideoCtrl'
-    // resolve: {
-    //   user: ['$meteor', function ($meteor) {
-    //     return $meteor.requireUser();
-    //   }]
-    // }
+    templateUrl: 'client/views/video.html',
+    controller: 'VideoCtrl',
+    resolve: {
+      user: ['$meteor', function ($meteor) {
+        return $meteor.requireUser();
+      }],
+      rooms: ['$meteor', function ($meteor) {
+        return $meteor.subscribe('rooms');
+      }]
+    }
   });
 
   $urlRouterProvider.otherwise('tab/chats');

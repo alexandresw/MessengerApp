@@ -15,5 +15,9 @@ Rooms.attachSchema(
          type: Date,
          denyUpdate: true
       },
+      status: {
+         type: String,
+         defaultValue: 'Calling' // ['Calling', 'Connected', 'Disconnected']
+      }
    })
 );

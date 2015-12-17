@@ -2,58 +2,53 @@ angular
 .module('MessengerApp')
 .controller('VideoCtrl', VideoCtrl);
 
+function VideoCtrl ($scope, $state, $stateParams, $ionicModal, $meteor, $ionicPopup, webrtcService) {
 
-function VideoCtrl ($scope, $ionicModal, $meteor, $sce, webrtcService) {
-	
-	$scope.webrtcUsers = null;
-	$scope.webrtcUsersVideo = {};
-	$scope.videoHTML = null;
+  console.log("roomId="+$stateParams.roomId);
+	$scope.room = Rooms.findOne({_id: $stateParams.roomId});
   $scope.connectWebrtc = connectWebrtc;
+  $scope.hangup = hangup;
+  $scope.webrtc = null;
+
+  if(!$scope.room) hangup();
+
+  function hangup() {
+    clearInterval(window.hangupInteval);
+    if($scope.webrtc){
+      console.log('hangup...');
+      $scope.webrtc.stopLocalVideo();
+      $scope.webrtc.leaveRoom();
+    }
+    $state.go('tab.contacts');
+  }
+
+  function showHangupMessage() {
+    clearInterval(window.hangupInteval);
+    var alertPopup = $ionicPopup.alert({
+      title: 'Videochat',
+      template: 'Videochat has disconnected!'
+    });
+    alertPopup.then(function(res) {
+      hangup();
+    });
+  };
+
+  window.hangupInteval = setInterval(function(){
+    if(!Rooms.findOne({_id: $stateParams.roomId})){
+      showHangupMessage();
+      clearInterval(window.hangupInteval);
+    }
+  }, 3000);
 
 
-	function addWebrtcUser(doc){
+  $scope.autorun(function() {
+    console.log('autorun video: ');
+    console.log('autorun video: ' + $scope.room);
+    if($scope.room && $scope.room.status === 'Rejected'){
+      showHangupMessage();
+    }
+  });
 
-		// $scope.webrtcUsersVideo[JSON.stringify(doc.peerId)] = {
-		// 	peerObj: doc.peerObj,
-		// 	videoObj: doc.videoObj
-		// };
-
-		// if(doc.videoObj){
-		// 	$scope.videoHTML = $sce.trustAsHtml(doc.videoObj.outerHTML);
-  //     $('#localVideo').hide();
-		// }
-
-
-		// $scope.webrtcUsers = 
-		// 	{
-		// 		peerId: doc.peerId,
-		// 		videoId: doc.videoId,
-		// 		nick: doc.nick,
-		// 		active: true,
-		// 		raisedHand: false,
-		// 		muted: true
-		// 	};
-	}
-
-	// function removeWebrtcUser(id){
-	// 	$scope.webrtcUsers = {};
-	//    if($scope.webrtcUsersVideo[JSON.stringify(webrtcUser.peerId)]){
-	// 	delete $scope.webrtcUsersVideo[JSON.stringify(webrtcUser.peerId)];
- //  	}
-	// }
-
-	// function getWebrtcUserVideo(id){
-	// 	if($scope.webrtcUsersVideo[JSON.stringify(webrtcUser.peerId)]){
-	// 		return {
-	// 			peerId: webrtcUser.peerId,
-	// 			nick: webrtcUser.nick,
-	// 			active: webrtcUser.active,
-	// 			raisedHand: webrtcUser.raisedHand,
-	// 			peerObj: $scope.webrtcUsersVideo[JSON.stringify(webrtcUser.peerId)].peerObj,
-	// 			videoObj: $scope.webrtcUsersVideo[JSON.stringify(webrtcUser.peerId)].videoObj
-	// 		};
-	// 	}
-	// }
 
   //setTimeout(function(){
     connectWebrtc();  
@@ -62,11 +57,11 @@ function VideoCtrl ($scope, $ionicModal, $meteor, $sce, webrtcService) {
 
   function connectWebrtc() {
 
-   var webrtc = webrtcService.startWebRtc();
+    var webrtc = webrtcService.startWebRtc();
 
     webrtc.on('readyToCall', function () {
-       console.log("readyToCall called...");
-       webrtc.joinRoom();
+       console.log("readyToCall called... room:"+$scope.room._id);
+       webrtc.joinRoom({'roomId': $scope.room._id});
 
     });
 
@@ -74,36 +69,14 @@ function VideoCtrl ($scope, $ionicModal, $meteor, $sce, webrtcService) {
     webrtc.on('videoAdded', function (video, peer) {
        console.log('video added', peer);
 
-       // var videoId = video.id;
-       // if(peer.type === 'audio'){
-       //    video.pause();
-       //    video = null;
-       // }
-       // else{
-       //    video.oncontextmenu = function () { return false; };
-       // }
-
-       // var obj = {
-       //    peerId: peer.id,
-       //    videoId: videoId,
-       //    nick: peer.nick,
-       //    peerObj: peer,
-       //    videoObj: video
-       // };
-
-       // addWebrtcUser(obj);
-
     });
-
 
     // a peer was removed
     webrtc.on('videoRemoved', function (video, peer) {
-       removeWebrtcUser(peer.id);
+      showHangupMessage();
     });
 
-
     ////////////////////////////////////////////////////////////////////////////
-
 
     // local p2p/ice failure
     webrtc.on('iceFailed', function (peer) {
@@ -114,6 +87,7 @@ function VideoCtrl ($scope, $ionicModal, $meteor, $sce, webrtcService) {
         console.log('remote fail');
     });
 
+    $scope.webrtc = webrtc;
 
  }
 

@@ -6,7 +6,8 @@ App.info({
   description: 'Messenger Application',
   author: 'Team Pulivarthi',
   email: 'contact@example.com',
-  website: 'http://52.22.19.104'
+  website: 'http://52.22.19.104',
+  version: '0.0.2'
 });
 
 App.icons({

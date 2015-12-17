@@ -61,14 +61,14 @@ Security.defineMethod("ifOwnsRoom", {
   fetch: [],
   transform: null,
   deny: function (type, arg, userId, doc) {
-     return userId !== doc.callerId || userId !== doc.receiverId ;
+     return !(userId === doc.callerId || userId === doc.receiverId);
   }
 });
 
 
 // Applying Rules
 
-Rooms.permit(['insert', 'remove'])
+Rooms.permit(['insert', 'update', 'remove'])
    .ifLoggedIn()
    .ifOwnsRoom()
    .apply();

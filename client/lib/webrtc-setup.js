@@ -28,9 +28,9 @@ APPwebrtcConfigpeerConnectionConfig = null;
 
 $(function() {
 
-  // Meteor.call('getIceServers', function(error, data){
-  //   APPwebrtcConfigpeerConnectionConfig = data
-  // });
+  Meteor.call('getIceServers', function(error, data){
+    APPwebrtcConfigpeerConnectionConfig = data
+  });
 
 });
 
@@ -42,7 +42,7 @@ angular
       startWebRtc: function() {
 
         console.log("Starting webrtc...");
-        var username = 'test';// $rootScope.currentUser.profile.name;
+        var username = Meteor.user().profile.name;
 
         var peerConnectionConfig = {
           'iceServers': [

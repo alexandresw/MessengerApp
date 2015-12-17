@@ -14,18 +14,28 @@ Meteor.methods({
     if (!this.userId) {
       throw new Meteor.Error('not-logged-in', 'Must be logged in to send message.');
     }
-    check(message, {
-      text: String,
-      chatId: String
-    });
+    check(message, Match.OneOf(
+      {
+        text: String,
+        type: String,
+        chatId: String
+      },
+      {
+        picture: String,
+        type: String,
+        chatId: String
+      }
+    ));
 
     message.timestamp = new Date();
     message.userId = this.userId;
 
     var messageId = Messages.insert(message);
-    var result = Chats.update({_id: message.chatId}, { $set: { lastMessage: message } });
-    console.log(result);
 
+    if(message.type === 'text'){
+      Chats.update({_id: message.chatId}, { $set: { lastMessage: message } });
+    }
+    
     return messageId;
   },
 
@@ -162,7 +172,6 @@ Meteor.methods({
 
     var result = HTTP.call('POST', url, { "data": data});
 
-    console.log(JSON.stringify(result.data.d));
     return result.data.d;
   },
 

@@ -1,14 +1,17 @@
 Connections = new Mongo.Collection("connections");
 
 Streamy.on('join', function(data, from) {
+   check(data.roomId, String);
    console.log("webrtc: join: data: "+data  + " - from: " + from);
-   var userId = Streamy.id(from) /*Streamy.userId(from)*/,
+   var roomId = data.roomId,
+      userId = Streamy.userId(from),
       sessionId = Streamy.id(from);
 
    // create connection
    Connections.update(
       {userId: userId},
       {
+         roomId: roomId,
          userId: userId,
          sessionId: sessionId,
          resources: { screen: false, video: true, audio: false }
@@ -19,10 +22,16 @@ Streamy.on('join', function(data, from) {
    // reply others users data
    var result = { clients: {} };
    Connections.find({
+      roomId: roomId,
       userId: {$ne: userId},
    }).fetch().map(function(con){
       result.clients[con.sessionId] = { screen: con.resources.screen, video: true, audio: false };
    });
+
+   var room = Rooms.findOne({_id: roomId});
+   if(room && room.receiverId === userId){
+      Rooms.update({_id: roomId}, {$set: { status: 'Connected' }});   
+   }
 
    Streamy.emit('joinCb', result, from);
 
@@ -44,12 +53,12 @@ function removeFeed(sessionId, type) {
 
    var con = Connections.findOne({sessionId: sessionId});
    if(con){
-      var userId = con.userId;
+      var roomId = con.roomId;
       Connections.remove({sessionId: sessionId});
 
       // notify others users about this remove
       Connections.find({
-         userId: userId
+         roomId: roomId
       }).fetch().map( function(con){
 
          Streamy.emit('remove', {
@@ -58,6 +67,8 @@ function removeFeed(sessionId, type) {
          }, Streamy.sockets(con.sessionId));
 
       });
+
+      Rooms.update({_id: roomId}, {$set: { status: 'Disconnected' }});  
    }
 }
 

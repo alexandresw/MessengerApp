@@ -9,6 +9,12 @@ Meteor.publish('contacts', function () {
   return Contacts.list(this.userId);
 });
 
+Meteor.publish('rooms', function () {
+  if (!this.userId) return;
+
+  return Rooms.find({ $or: [{callerId: this.userId}, {receiverId: this.userId}], status: { $nin: ['Disconnected'] } });
+});
+
 Meteor.publishComposite('chats', function () {
   if (! this.userId) {
     return;
@@ -21,7 +27,7 @@ Meteor.publishComposite('chats', function () {
     children: [
     {
       find: function (chat) {
-        return Messages.find({ chatId: chat._id });
+        return Messages.find({ chatId: chat._id }, {sort: {'timestamp': 1 } });
       }
     },
     {
